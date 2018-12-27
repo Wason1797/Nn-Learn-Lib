@@ -1,3 +1,3 @@
-from nn_lib.samples import sample
+from nn_lib.samples import perceptron_sample
 
-sample.run()
+perceptron_sample.run()
