@@ -1,3 +1,3 @@
-from lib.samples import sample
+from nn_lib.samples import sample
 
 sample.run()
