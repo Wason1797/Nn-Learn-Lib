@@ -20,35 +20,44 @@ pygame.display.set_caption('Perceptron sample')
 training_set = ts.init_set()
 
 
-def draw():
+def run():
+
+    neuron = ps.Perceptron(2)
+    ps.random_weight_init(neuron)
+
+    pause = None
+
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 return
+            elif event.type == pygame.MOUSEBUTTONUP:
+                for point in training_set:
+                    neuron.train([point.x, point.y], point.label, 0.1)
+                    pause = None
 
-        for point in training_set:
+        if pause is None:
+            for point in training_set:
 
-            mapped_x = int(fn.translate(point.x, 0, 1, 500, 0))
-            mapped_y = int(fn.translate(point.y, 0, 1, 500, 0))
+                mapped_x = int(fn.translate(point.x, 0, 1, 500, 0))
+                mapped_y = int(fn.translate(point.y, 0, 1, 500, 0))
 
-            if point.label == 1:
-                pygame.draw.circle(windowSurface, RED,
-                                   (mapped_x, mapped_y), 2)
-            else:
-                pygame.draw.circle(windowSurface, GREEN,
-                                   (mapped_x, mapped_y), 2)
+                if point.label == 1:
+                    pygame.draw.circle(windowSurface, BLUE,
+                                       (mapped_x, mapped_y), 6)
+                else:
+                    pygame.draw.circle(windowSurface, WHITE,
+                                       (mapped_x, mapped_y), 6)
 
-        pygame.draw.line(windowSurface, WHITE, (0, 0), (width, height), 2)
-        pygame.display.update()
+                if neuron.predict([point.x, point.y]) == point.label:
+                    pygame.draw.circle(windowSurface, GREEN,
+                                       (mapped_x, mapped_y), 2)
+                else:
+                    pygame.draw.circle(windowSurface, RED,
+                                       (mapped_x, mapped_y), 2)
 
+            pygame.draw.line(windowSurface, WHITE, (0, 0), (width, height), 2)
 
-def run():
-
-    draw()
-
-    neuron = ps.Perceptron(2)
-    print(neuron.weights)
-    ps.random_weight_init(neuron)
-    print(neuron.weights)
-    print(neuron.predict([1, 1]))
+            pygame.display.update()
+            pause = True

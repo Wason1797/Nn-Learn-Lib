@@ -46,6 +46,13 @@ class Perceptron:
                      for i in range(self.input_size)])
         return sign(w_sum)
 
+    def train(self, _inputs, label, learning_rate):
+        current_guess = self.predict(_inputs)
+        err = label - current_guess
+
+        for i in range(self.input_size):
+            self.weights[i] += err*_inputs[i]*learning_rate
+
 
 def random_weight_init(_p: Perceptron):
     """
