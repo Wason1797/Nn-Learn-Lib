@@ -1,4 +1,5 @@
 import random as rd
+from nn_lib.common import functions as fn
 
 
 class Perceptron:
@@ -21,13 +22,16 @@ class Perceptron:
             and conforms it to the activation function
     """
 
-    def __init__(self, _input_size):
-        self. weights = []
+    def __init__(self, _input_size, _bias_size):
+        self.weights = []
         self.input_size = _input_size
+        self.biases = []
+        self.bias_weights = []
+        self.bias_size = _bias_size
 
-    def predict(self, _inputs):
+    def clasify(self, _inputs):
         """
-            Predict
+            Clasify
 
             Gives an output (weighted sum) conformed to an activation function
             in this case the sign() function
@@ -44,14 +48,44 @@ class Perceptron:
             return None
         w_sum = sum([self.weights[i]*_inputs[i]
                      for i in range(self.input_size)])
-        return sign(w_sum)
+        b_w_sum = sum([self.biases[i]*self.bias_weights[i]
+                       for i in range(self.bias_size)])
+        return sign(w_sum+b_w_sum)
 
     def train(self, _inputs, label, learning_rate):
-        current_guess = self.predict(_inputs)
+        """
+            Train
+
+            Adjusts the perceptron weights acording to the error measured
+
+            Param
+            ----------
+            _inputs : arr
+                The array of inputs for the perceptron
+            label : int
+                The correct answer to those inputs
+            learning_rate : float
+                A variable that controlls how much we change the weights
+                thowards the error
+        """
+
+        current_guess = self.clasify(_inputs)
         err = label - current_guess
 
         for i in range(self.input_size):
             self.weights[i] += err*_inputs[i]*learning_rate
+
+        for i in range(self.bias_size):
+            self.bias_weights[i] += err*self.biases[i]*learning_rate
+
+    def predict_line_y(self, _x):
+        if self.input_size is 2 and self.bias_size is 1:
+            w0, w1 = self.weights
+            w2 = self.bias_weights[0]
+            return fn.line(-w0/w1, _x, -w2/w1)
+        else:
+            print("Non linear perceptron")
+            return None
 
 
 def random_weight_init(_p: Perceptron):
@@ -70,6 +104,29 @@ def random_weight_init(_p: Perceptron):
     _p.weights.clear()
     for i in range(_p.input_size):
         _p.weights.append(rd.choice([1-rd.random(), -1+rd.random()]))
+
+
+def random_bias_weight_init(_p: Perceptron):
+    """
+        Random Bias Weight Initializer
+
+        initializes an array of bias_weights randomly
+        with numbers betwen 1 and -1
+
+        Param
+        ----------
+        _p : Perceptron
+            The perceptron that we want to initialize
+    """
+
+    _p.bias_weights.clear()
+    for i in range(_p.bias_size):
+        _p.bias_weights.append(rd.choice([1-rd.random(), -1+rd.random()]))
+
+
+def bias_value_init(_p: Perceptron, _val):
+    for i in range(_p.bias_size):
+        _p.biases.append(_val)
 
 
 def sign(num: float):
