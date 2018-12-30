@@ -1,5 +1,5 @@
-from nn_lib.samples import simple_perceptron_sample
-from nn_lib.samples import refined_perceptron_sample
+from nn_lib.samples.perceptron_samples import simple_perceptron_sample
+from nn_lib.samples.perceptron_samples import refined_perceptron_sample
 
 
 def render_menu():

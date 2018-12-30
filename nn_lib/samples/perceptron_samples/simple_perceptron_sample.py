@@ -1,5 +1,5 @@
 from nn_lib.Perceptron import SimplePerceptron as ps
-from nn_lib.samples import perceptron_sample_ts as ts
+from nn_lib.samples.perceptron_samples import perceptron_sample_ts as ts
 from nn_lib.common import functions as fn
 import pygame
 from pygame.locals import *
