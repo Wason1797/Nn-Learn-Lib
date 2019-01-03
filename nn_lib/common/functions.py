@@ -20,3 +20,11 @@ def reshape_matrix_elements(_matrix, start1, stop1, start2, stop2):
 
 def sigmoid(x):
     return 1/(1 + mt.exp(-x))
+
+
+def dsigmoid(x):
+    return sigmoid(x)*(1 - sigmoid(x))
+
+
+def dsigmoid_min(x):
+    return x * (1 - x)
