@@ -42,5 +42,14 @@ class NeuralNetwork:
 
         return output_layer_values
 
-    def train(self, _inputs, _label):
-        pass
+    def train(self, _inputs, _labels):
+        predicted_outputs = self.feed_forward_prediction(_inputs)
+
+        _labels = np.array([_labels]).T
+        output_errors = np.subtract(_labels, predicted_outputs)
+
+        hidden_output_weights_transposed = np.transpose(
+            self.weights_hidden_output)
+
+        hidden_errors = np.matmul(
+            output_errors, hidden_output_weights_transposed)
