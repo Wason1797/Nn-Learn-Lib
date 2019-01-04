@@ -78,17 +78,22 @@ class NeuralNetwork:
         hidden_output_gradient = np.multiply(
             output_layer_gradient_values, output_errors)
 
+        hidden_output_gradient = _learning_rate * hidden_output_gradient
+
         # Get the weight deltas
 
-        hidden_output_delta = _learning_rate * hidden_output_gradient
-
         hidden_output_delta = np.matmul(
-            hidden_output_delta, np.transpose(hidden_layer_values))
+            hidden_output_gradient, np.transpose(hidden_layer_values))
 
         # addjust weights
 
         self.weights_hidden_output = np.add(
             self.weights_hidden_output, hidden_output_delta)
+
+        # Adjust bias weights with the gradients
+
+        self.weights_output_bias = np.add(
+            self.weights_output_bias, hidden_output_gradient)
 
         hidden_output_weights_transposed = np.transpose(
             self.weights_hidden_output)
@@ -103,9 +108,12 @@ class NeuralNetwork:
         input_hidden_gradient = np.multiply(
             hidden_layer_gradient_values, hidden_errors)
 
-        input_hidden_delta = _learning_rate * input_hidden_gradient
+        input_hidden_gradient = _learning_rate * input_hidden_gradient
         input_hidden_delta = np.matmul(
-            input_hidden_delta, np.transpose(_inputs))
+            input_hidden_gradient, np.transpose(_inputs))
 
         self.weights_input_hidden = np.add(
             self.weights_input_hidden, input_hidden_delta)
+
+        self.weights_hidden_bias = np.add(
+            self.weights_hidden_bias, input_hidden_gradient)

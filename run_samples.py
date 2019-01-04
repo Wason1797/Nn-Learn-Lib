@@ -1,5 +1,6 @@
 from nn_lib.samples.perceptron_samples import simple_perceptron_sample
 from nn_lib.samples.perceptron_samples import refined_perceptron_sample
+from nn_lib.Layers import nn
 
 
 def render_menu():
@@ -10,12 +11,16 @@ def render_menu():
     print("q. Exit")
 
 
-while True:
-    render_menu()
-    opt = input("Select an option from the avove ... ")
-    if opt is "1":
-        simple_perceptron_sample.run()
-    elif opt is "2":
-        refined_perceptron_sample.run()
-    elif opt is "q":
-        break
+# while True:
+#     render_menu()
+#     opt = input("Select an option from the avove ... ")
+#     if opt is "1":
+#         simple_perceptron_sample.run()
+#     elif opt is "2":
+#         refined_perceptron_sample.run()
+#     elif opt is "q":
+#         break
+
+network = nn.NeuralNetwork(3, 5, 2)
+
+network.train([1, 2, 3], [1, 2], 0.1)
