@@ -1,21 +1,23 @@
-import pygame,sys
+import pygame
+import sys
 from nn_lib.NeuralNetworkRep.NeuralNetworksViz import Network
 from pygame.locals import *
 
-width=1000
-height=500
-Color_screen=(49,150,100)
+width = 1000
+height = 500
+Color_screen = (49, 150, 100)
+
 
 def main():
-    screen=pygame.display.set_mode((width,height))
+    screen = pygame.display.set_mode((width, height))
 
-    network=Network.Network()
+    network = Network.Network()
 
-    x0=Network.Neuron.Neuron(-200+500, -75+200)
-    x1=Network.Neuron.Neuron(-200+500, 75+200)
-    h0=Network.Neuron.Neuron(0+500, -75+200)
-    h1=Network.Neuron.Neuron(0+500, 75+200)
-    y=Network.Neuron.Neuron(200+500, 0+200)
+    x0 = Network.Neuron.Neuron(-200+500, -75+200)
+    x1 = Network.Neuron.Neuron(-200+500, 75+200)
+    h0 = Network.Neuron.Neuron(0+500, -75+200)
+    h1 = Network.Neuron.Neuron(0+500, 75+200)
+    y = Network.Neuron.Neuron(200+500, 0+200)
 
     network.connect(x0, h0)
     network.connect(x0, h1)
@@ -32,14 +34,13 @@ def main():
     screen.fill(Color_screen)
     network.show(screen)
     pygame.display.flip()
-    
+
     while True:
         for events in pygame.event.get():
             if events.type == QUIT:
-                sys.exit(0)
+                pygame.quit()
+                return
 
 
-
-
-
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    main()
