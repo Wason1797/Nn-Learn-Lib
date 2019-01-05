@@ -1,23 +1,21 @@
-import pygame,sys,Network
+import pygame,sys
+from nn_lib.NeuralNetworkRep.NeuralNetworksViz import Network
 from pygame.locals import *
-from random import random
 
 width=1000
 height=500
 Color_screen=(49,150,100)
 
 def main():
-    pygame.init()
     screen=pygame.display.set_mode((width,height))
-    
 
     network=Network.Network()
 
-    x0=Network.Neuron.Neuron(-200+500, -75+200,"x0")
-    x1=Network.Neuron.Neuron(-200+500, 75+200,"x1")
-    h0=Network.Neuron.Neuron(0+500, -75+200,"h0")
-    h1=Network.Neuron.Neuron(0+500, 75+200,"h1")
-    y=Network.Neuron.Neuron(200+500, 0+200,"y")
+    x0=Network.Neuron.Neuron(-200+500, -75+200)
+    x1=Network.Neuron.Neuron(-200+500, 75+200)
+    h0=Network.Neuron.Neuron(0+500, -75+200)
+    h1=Network.Neuron.Neuron(0+500, 75+200)
+    y=Network.Neuron.Neuron(200+500, 0+200)
 
     network.connect(x0, h0)
     network.connect(x0, h1)
@@ -32,18 +30,16 @@ def main():
     network.add_neuron(h1)
     network.add_neuron(y)
     screen.fill(Color_screen)
-    
+    network.show(screen)
+    pygame.display.flip()
     
     while True:
         for events in pygame.event.get():
             if events.type == QUIT:
                 sys.exit(0)
-        screen.fill(Color_screen)        
-        network.show(screen)
-        network.update()
-        if(pygame.time.get_ticks()%500==0):
-            inputs = [random(),random()]
-            network.feedforward(inputs)
-        pygame.display.flip()
+
+
+
+
 
 if __name__ == '__main__': main()

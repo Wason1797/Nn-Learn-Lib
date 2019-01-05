@@ -1,5 +1,5 @@
-import Connection
-import Neuron
+from nn_lib.NeuralNetworkRep.NeuralNetworksViz import Connection
+from nn_lib.NeuralNetworkRep.NeuralNetworksViz import Neuron
 from random import random
 class Network:
 
