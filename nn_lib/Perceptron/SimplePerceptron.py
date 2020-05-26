@@ -42,8 +42,8 @@ class Perceptron:
             print("size missmatch {} is not equal to {}".format(
                 _size, self.input_size))
             return None
-        w_sum = sum([self.weights[i]*_inputs[i]
-                     for i in range(self.input_size)])
+        w_sum = sum(self.weights[i]*_inputs[i]
+                    for i in range(self.input_size))
         return sign(w_sum)
 
     def train(self, _inputs, label, learning_rate):
@@ -59,7 +59,7 @@ class Perceptron:
             label : int
                 The correct answer to those inputs
             learning_rate : float
-                A variable that controlls how much we change the weights 
+                A variable that controlls how much we change the weights
                 thowards the error
         """
 
@@ -83,9 +83,7 @@ def random_weight_init(_p: Perceptron):
             The perceptron that we want to initialize
     """
 
-    _p.weights.clear()
-    for i in range(_p.input_size):
-        _p.weights.append(rd.choice([1-rd.random(), -1+rd.random()]))
+    _p.weights = [rd.choice([1-rd.random(), -1+rd.random()]) for _ in range(_p.input_size)]
 
 
 def sign(num: float):

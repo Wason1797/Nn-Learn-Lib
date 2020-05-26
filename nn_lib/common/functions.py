@@ -10,12 +10,8 @@ def line(m, x, b):
 
 
 def reshape_matrix_elements(_matrix, start1, stop1, start2, stop2):
-    return [
-        [
-            translate(item, start1, stop1, start2, stop2)
-            for item in row
-        ]
-        for row in _matrix]
+    return [[translate(item, start1, stop1, start2, stop2)for item in row]
+            for row in _matrix]
 
 
 def sigmoid(x):
